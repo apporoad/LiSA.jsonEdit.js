@@ -76,6 +76,9 @@
         }
         function b64DecodeUnicode(str) {
         // Going backwards: from bytestream, to percent-encoding, to original string.
+
+        var rLength = 4* Math.floor((str.length) /4 )
+        str = str.substring(0,rLength)
         return decodeURIComponent(atob(str).split('').map(function(c) {
             return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
         }).join(''));
@@ -92,9 +95,14 @@
             
         }
         var cache = paramJsonStr || storage.getItem('jsonedit')
-        var json = cache ? JSON.parse(cache) : {}
 
-        const editor = new JSONEditor(container, options, json)
+        try{
+            var json = cache ? JSON.parse(cache) : {}
+            const editor = new JSONEditor(container, options, json)
+        }catch{
+            console.log(cache)
+            document.body.innerHTML  = cache
+        }
     </script>
 </body>
 
