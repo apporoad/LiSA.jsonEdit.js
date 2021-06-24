@@ -90,7 +90,14 @@
             paramJsonStr = b64DecodeUnicode(paramJsonStr)
 
             if(paramJsonStr){
-                paramJsonStr = paramJsonStr.replaceAll('\\r\\n','').replaceAll('\\\"','"').replace(/^"/g,"").replace(/"$/g, '')
+                paramJsonStr = paramJsonStr
+                .replaceAll('\\r\\n','')
+                .replaceAll('\\\"','"')
+                .replace(/[\\]+\"/g, '"')
+                .replace(/^"/g,"")
+                .replace(/"$/g, '')
+                .replaceAll('"{','{')
+                .replaceAll('}"','}')
             }
             
         }
